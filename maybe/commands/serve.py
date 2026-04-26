@@ -61,17 +61,22 @@ def serve(port, dir):
     class QuietHandler(http.server.SimpleHTTPRequestHandler):
         def log_message(self, format, *args):
             code = args[1] if len(args) > 1 else "?"
+            if str(code) == "400":
+                return
             method = self.command if hasattr(self, "command") else "?"
             path = self.path if hasattr(self, "path") else "/"
             color = "\033[32m" if str(code).startswith("2") else "\033[33m" if str(code).startswith("3") else "\033[31m"
             reset = "\033[0m"
             click.echo(f"   {color}HTTP{reset}  {self.log_date_time_string()}  {code}  {method} {path}")
 
+        def log_error(self, format, *args):
+            pass
+
     print_box(port)
 
+    socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", port), QuietHandler) as httpd:
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             click.echo("\n   Gracefully shutting down. Please wait...\n")
-
