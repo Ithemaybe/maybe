@@ -1,12 +1,12 @@
 [build-system]
 requires = ["setuptools>=68"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "maybe"
 version = "1.0.0"
-description = "creating a local server from themaybe"
-authors = [{ name = "ithemaybe", email = "none" }]
+description = "Personal CLI toolkit by ithemaybe"
+authors = [{ name = "ithemaybe", email = "ithemaybe@proton.me" }]
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.8"
